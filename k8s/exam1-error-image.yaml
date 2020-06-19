@@ -5,15 +5,30 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: nginx
+      app: nginx-exam
   replicas: 1
   template:
     metadata:
       labels:
-        app: nginx
+        app: nginx-exam
     spec:
       containers:
       - name: nginx
         image: nginx-error-here:1.14.2 # fix me to nginx:1.14.2
         ports:
         - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: nginx-exam-service
+ labels:
+  app: nginx-exam
+spec:
+ type: ClusterIP
+ selector:
+   app: nginx-exam
+ ports:
+ - protocol: TCP
+   port: 80
+   targetPort: 80
